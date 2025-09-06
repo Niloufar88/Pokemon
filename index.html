@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="css/main.css" />
   </head>
 
-  <body>
+  <body onload="onLoad()">
     <div class="parent">
       <header id="header" class="header">
         <div class="container">
@@ -49,19 +49,73 @@
       </header>
       <main id="main" class="main">
         <div class="cards_container">
-          <div class="cards">
+          <!-- <div class="cards">
             <div class="header">
-              <span class="pokemon_id"></span>
+              <span class="pokemon_id">#001</span>
               <h3 class="pokemon_name"></h3>
             </div>
             <div class="pokemon_img">
-              <img src="" alt="" />
+              <img src="/assets/img/Download (54).jpg" alt="" />
             </div>
 
-            <div class="pokemon_type"></div>
+            <div class="pokemon_type">
+              <button class="symbol_type">fire</button>
+              <button class="symbol_type">poison</button>
+            </div>
+          </div> -->
+        </div>
+        <button id="show_more">show more</button>
+        <div class="card_overlay">
+          <div class="overlay">
+            <div class="overlay_header">
+              <span class="overlay_header_id">#</span>
+              <h3 class="overlay_header_name"></h3>
+            </div>
+            <div class="overlay_img">
+              <img src="" alt="" />
+            </div>
+            <div class="overlay_navbar">
+              <nav>
+                <ul class="overlay_list">
+                  main
+                </ul>
+                <ul class="overlay_list">
+                  stats
+                </ul>
+                <ul class="overlay_list">
+                  evo-chain
+                </ul>
+              </nav>
+            </div>
+            <div class="overlay_navbar_container" id="main_container">
+              <h4>Height =</h4>
+              <h4>Weight =</h4>
+              <h4>Base-Experience =</h4>
+              <h4>Abilities =</h4>
+            </div>
+            <div class="overlay_navbar_container" id="stats_container">
+              <h4>HP = /100</h4>
+              <h4>ATTACK = /100</h4>
+              <h4>DEFENCE = /100</h4>
+              <h4>SP-ATTACK = /100</h4>
+              <h4>SP-ADEFENCE = /100</h4>
+              <h4>SPEED = /100</h4>
+            </div>
+            <div class="overlay_navbar_container" id="moves_container">
+              <button>scratch</button>
+              <button>cut</button>
+              <button>double-kick</button>
+              <button>scratch</button>
+              <button>scratch</button>
+              <button>scratch</button>
+              <button>scratch</button>
+              <button>scratch</button>
+              <button>scratch</button>
+            </div>
           </div>
         </div>
       </main>
+
       <footer id="footer" class="footer">
         <div class="logo">
           <img src="" alt="" />
