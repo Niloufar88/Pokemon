@@ -1,0 +1,13 @@
+const baseUrl = "https://pokeapi.co/api/v2/pokemon?limit=30&offset=0";
+const cardsContainerEl = document.querySelector('.cards_container');
+const overlayEl = document.querySelector('.card_overlay');
+const searchEl = document.getElementById('search');
+const urlIntoObject = [];
+const mainImgOverlay = document.querySelector('.overlay_img img');
+const pokemonCardImg = [];
+const pokeType = [];
+const pokeAbilitiesEl = [];
+const urlElement = [];
+const urlArrayData = [];
+const pokeNames = [];
+const idEl = [];

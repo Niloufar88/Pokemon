@@ -33,7 +33,7 @@
 
   <body onload="onLoad()">
     <div class="parent">
-      <header id="header" class="header">
+      <header id="header" class="header" onclick="overlayDisplayAdd('header')">
         <div class="container">
           <div class="logo">
             <img
@@ -47,8 +47,12 @@
           <input type="search" id="search" class="serach_field" />
         </div>
       </header>
-      <main id="main" class="main">
-        <div class="cards_container">
+      <main id="main" class="main" onclick="overlayDisplayAdd('main')">
+        <div
+          class="cards_container"
+          id="cards_container"
+          onclick="overlayDisplayRemove('cards_container')"
+        >
           <!-- <div class="cards">
             <div class="header">
               <span class="pokemon_id">#001</span>
@@ -65,35 +69,53 @@
           </div> -->
         </div>
         <button id="show_more">show more</button>
-        <div class="card_overlay">
-          <div class="overlay">
+        <div
+          class="card_overlay d-none"
+          id="card_overlay"
+          onclick="overlayDisplayAdd('card_overlay')"
+        >
+          <!-- <div
+            class="overlay"
+            id="overlay"
+            onclick="stopPropagationFurthur('overlay')"
+          >
             <div class="overlay_header">
-              <span class="overlay_header_id">#</span>
-              <h3 class="overlay_header_name"></h3>
+              <span class="overlay_header_id">#001</span>
+              <h3 class="overlay_header_name">NAME</h3>
             </div>
             <div class="overlay_img">
               <img src="" alt="" />
             </div>
             <div class="overlay_navbar">
-              <nav>
-                <ul class="overlay_list">
-                  main
-                </ul>
-                <ul class="overlay_list">
-                  stats
-                </ul>
-                <ul class="overlay_list">
-                  evo-chain
-                </ul>
-              </nav>
+              <a
+                class="overlay_list"
+                id="main_list"
+                onclick="toggleNoneDisplayNavbar('moves_container', 'stats_container', 'main_container', 'main_list','stats_list','moves_list')"
+              >
+                Main
+              </a>
+              <a
+                class="overlay_list"
+                id="stats_list"
+                onclick="toggleNoneDisplayNavbar('main_container', 'moves_container', 'stats_container','stats_list','main_list','moves_list')"
+              >
+                Stats
+              </a>
+              <a
+                class="overlay_list"
+                id="moves_list"
+                onclick="toggleNoneDisplayNavbar('main_container', 'stats_container', 'moves_container','moves_list','main_list','stats_list')"
+              >
+                Moves
+              </a>
             </div>
             <div class="overlay_navbar_container" id="main_container">
-              <h4>Height =</h4>
-              <h4>Weight =</h4>
-              <h4>Base-Experience =</h4>
-              <h4>Abilities =</h4>
+              <h4>HEIGHT =</h4>
+              <h4>WEIGHT =</h4>
+              <h4>BASE-EXPERIENCE =</h4>
+              <h4>ABILITIES =</h4>
             </div>
-            <div class="overlay_navbar_container" id="stats_container">
+            <div class="overlay_navbar_container d-none" id="stats_container">
               <h4>HP = /100</h4>
               <h4>ATTACK = /100</h4>
               <h4>DEFENCE = /100</h4>
@@ -101,7 +123,7 @@
               <h4>SP-ADEFENCE = /100</h4>
               <h4>SPEED = /100</h4>
             </div>
-            <div class="overlay_navbar_container" id="moves_container">
+            <div class="overlay_navbar_container d-none" id="moves_container">
               <button>scratch</button>
               <button>cut</button>
               <button>double-kick</button>
@@ -112,11 +134,11 @@
               <button>scratch</button>
               <button>scratch</button>
             </div>
-          </div>
+          </div> -->
         </div>
       </main>
 
-      <footer id="footer" class="footer">
+      <footer id="footer" class="footer" onclick="overlayDisplayAdd('footer')">
         <div class="logo">
           <img src="" alt="" />
         </div>
