@@ -1,3 +1,7 @@
+.d-none {
+    display: none;
+}
+
 header {
     width: 100%;
     height: 100px;
@@ -14,6 +18,7 @@ header .container {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
 }
 
 header .container .logo {
@@ -35,9 +40,44 @@ header .container span {
     margin-left: 10px;
 }
 
-header .search input {
-    height: 25px;
-    padding: 3px;
+header form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 16px;
+}
+
+form .searchBox {
+    flex-grow: 1;
+    margin-right: 10px;
+    border: none;
+    border-radius: 16px;
+    outline: none;
+    font-size: 14px;
+    background-color: none;
+    line-height: 25px;
+}
+
+form input::placeholder {
+    padding: 4px;
+    color: #553e1f;
+    background-color: none;
+}
+
+form .searchBtn {
+    color: #553e1f;
+    cursor: pointer;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    transition: all 200ms linear;
+}
+
+form .searchBtn:hover {
+    scale: 1.4;
+    color: #ff6b57;
 }
 
 .main {
@@ -48,32 +88,55 @@ header .search input {
     row-gap: 50px;
     padding: 80px 80px 250px;
     background-color: #ffb95d;
+    height: fit-content;
 }
 
 .main .cards_container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
     place-content: center;
-    gap: 25px;
+    gap: 20px;
     padding: 20px;
+}
+
+.main .cards_container h2 {
+    text-align: center;
+    color: #553e1f;
+    font-size: 24px;
+    font-weight: 600;
 }
 
 .main .cards_container .cards {
     display: none;
     width: 100%;
-    height: auto;
+    height: 450px;
     flex-direction: column;
     place-content: center;
     border: none;
     border-radius: 16px;
-    cursor: pointer;
+    transition: all 200ms linear;
 }
 
 .main .cards_container .cards:nth-child(1),
 .main .cards_container .cards:nth-child(2),
 .main .cards_container .cards:nth-child(3),
 .main .cards_container .cards:nth-child(4),
-.main .cards_container .cards:nth-child(5) {
+.main .cards_container .cards:nth-child(5),
+.main .cards_container .cards:nth-child(6),
+.main .cards_container .cards:nth-child(7),
+.main .cards_container .cards:nth-child(8),
+.main .cards_container .cards:nth-child(9),
+.main .cards_container .cards:nth-child(10),
+.main .cards_container .cards:nth-child(11),
+.main .cards_container .cards:nth-child(12),
+.main .cards_container .cards:nth-child(13),
+.main .cards_container .cards:nth-child(14),
+.main .cards_container .cards:nth-child(15),
+.main .cards_container .cards:nth-child(16),
+.main .cards_container .cards:nth-child(17),
+.main .cards_container .cards:nth-child(18),
+.main .cards_container .cards:nth-child(19),
+.main .cards_container .cards:nth-child(20) {
     width: 100%;
     height: auto;
     display: flex;
@@ -81,8 +144,16 @@ header .search input {
     place-content: center;
     border: none;
     border-radius: 16px;
-    cursor: pointer;
 }
+
+.main .cards_container .cards .pokemon_img:hover img {
+    filter: blur(2px);
+}
+
+
+/* .blurBackgroundColor {
+    
+} */
 
 .main .cards_container .cards .header {
     display: flex;
@@ -104,18 +175,19 @@ header .search input {
 .main .cards_container .cards .header .pokemon_name {
     font-size: 16px;
     font-weight: 600;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .main .cards_container .cards .pokemon_img {
     width: 100%;
-    background-color: #455252;
+    height: 300px;
+    cursor: pointer;
 }
 
 .main .cards_container .cards .pokemon_img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .main .cards_container .cards .pokemon_type {
@@ -132,11 +204,12 @@ header .search input {
     border-radius: 0 0 16px 16px;
 }
 
-.main .cards_container .cards .pokemon_type button {
-    display: block;
-    width: 80px;
-    line-height: 35px;
-    padding: 3px;
+.main .cards_container .cards .pokemon_type span {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    line-height: 25px;
+    padding: 8px;
     background-color: #ffb95d;
     color: #553e1f;
     font-weight: 600;
@@ -152,22 +225,272 @@ header .search input {
     padding: 5px;
     cursor: pointer;
     background-color: antiquewhite;
-    transition: all 200m linear;
     color: #553e1f;
     border: none;
     font-weight: 500;
     text-transform: uppercase;
     border-radius: 16px;
+    transition: all 200ms linear;
 }
 
 .main #show_more:hover {
-    background-color: #455252;
+    background-color: #553e1f;
     color: whitesmoke;
     font-weight: 600;
 }
+
+.card_overlay {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(120, 120, 120, 0.5);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    overflow: scroll;
+}
+
+.card_overlay .overlay {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffebcd;
+    width: 360px;
+    height: auto;
+    /* height: fit-content; */
+    max-height: 100vh;
+    border: none;
+    border-radius: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card_overlay .overlay .overlay_header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+}
+
+.card_overlay .overlay .overlay_header .overlay_header_id {
+    font-weight: 600;
+}
+
+.card_overlay .overlay .overlay_header .overlay_header_name {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.poke_img {
+    position: relative;
+}
+
+.poke_img a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 28px;
+    height: 28px; */
+}
+
+.poke_img a #leftArrow {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #ffebcd;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%, -50%);
+    z-index: 999;
+}
+
+.poke_img a #rightArrow {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #ffebcd;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%, -50%);
+    z-index: 999;
+}
+
+.card_overlay .overlay .overlay_img {
+    /* background-color: #455252; */
+    margin: 10px 0;
+    width: 100%;
+    height: 250px;
+}
+
+.card_overlay .overlay .overlay_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card_overlay .overlay .overlay_navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+.card_overlay .overlay .overlay_navbar a {
+    width: 33%;
+    text-align: center;
+    line-height: 40px;
+    height: 100%;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 200ms linear;
+}
+
+.card_overlay .overlay .overlay_navbar a:first-child {
+    background-color: #ed9b1fff;
+}
+
+.card_overlay .overlay .overlay_navbar a:hover {
+    border: 1px solid #455252;
+    scale: 0.9;
+}
+
+.card_overlay .overlay .overlay_navbar_container {
+    margin: 0 auto;
+    width: 100%;
+    padding: 25px;
+    height: auto;
+    border: none;
+    border-radius: 0 0 16px 16px;
+    background-color: #ed9b1fff;
+}
+
+
+/* .card_overlay .overlay .overlay_navbar_container:first-of-type {
+    background-color: #6c9f9fff;
+} */
+
+.card_overlay .overlay .overlay_navbar_container h4 {
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.card_overlay .overlay .overlay_navbar_container .progress-bar::-webkit-progress-bar {
+    background-color: #fff !important;
+    opacity: 0.8;
+}
+
+.card_overlay .overlay .overlay_navbar_container .progress-bar::-webkit-progress-value {
+    opacity: none;
+}
+
+
+/* .card_overlay .overlay .overlay_navbar_container .stats_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.card_overlay .overlay .overlay_navbar_container .stats_container .stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: none;
+} */
+
+
+/* .card_overlay .overlay .overlay_navbar_container #gens_container {
+    display: inline !important;
+    margin-right: 0;
+    margin: 10px;
+    width: 80px;
+    height: 40px;
+    padding: 8px;
+    border: none;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 500;
+    background-color: #ffebcd;
+}
+
+.card_overlay .overlay .overlay_navbar_container #gens_container .gen_container {
+    width: 60px;
+    height: 60px;
+    background-color: #ffebcd;
+    border-radius: 8px;
+}
+
+.card_overlay .overlay .overlay_navbar_container #gens_container .gen_container .genImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    vertical-align: auto;
+} */
 
 footer {
     width: 100%;
     height: 100px;
     background-color: #553e1f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer .logo {
+    height: 50px;
+    width: auto;
+}
+
+footer .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+footer #first {
+    font-weight: 600;
+    font-style: normal;
+    font-size: 16px;
+    color: #fff;
+    margin-left: 10px;
+}
+
+footer #second {
+    font-weight: 400;
+    font-size: 14px;
+    color: #fff;
+    margin-left: 40px;
+}
+
+.show {
+    display: block;
+}
+
+.fetchFailed {
+    grid-template-columns: 1fr !important;
+    color: crimson;
+    font-size: 36px;
+    font-weight: 600;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+.no-scroll {
+    overflow: hidden;
 }

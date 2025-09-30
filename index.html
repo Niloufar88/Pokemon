@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokemon</title>
+    <title>Pokedex</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/main.css" />
 
     <!-- Favicon -->
 
@@ -26,33 +30,38 @@
     />
     <link rel="manifest" href="assets/favicon_io/site.webmanifest" />
 
-    <!-- CSS -->
+    <!-- Font Awesome -->
 
-    <link rel="stylesheet" href="css/main.css" />
+    <link href="assets/Fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="assets/Fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="assets/Fontawesome/css/solid.css" rel="stylesheet" />
   </head>
 
-  <body onload="onLoad()">
-    <div class="parent">
+  <body onload="fetchPokemons()" id="body">
+    <div class="parent" onmouseover="">
       <header id="header" class="header" onclick="overlayDisplayAdd('header')">
-        <div class="container">
+        <div class="container" id="logo_container">
           <div class="logo">
             <img
-              src="/assets/icons/81717987-83b84000-947b-11ea-9ac9-5ad1d59adf7a.png"
+              src="assets/icons/81717987-83b84000-947b-11ea-9ac9-5ad1d59adf7a.png"
               alt="Logo"
             />
           </div>
           <span>POKEDEX</span>
         </div>
-        <div class="search">
-          <input type="search" id="search" class="serach_field" />
-        </div>
+        <form class="search">
+          <input
+            type="search"
+            id="search-input"
+            class="searchBox"
+            placeholder="Search for Pokemons..."
+            required
+          />
+          <i class="fa-solid fa-magnifying-glass searchBtn"></i>
+        </form>
       </header>
       <main id="main" class="main" onclick="overlayDisplayAdd('main')">
-        <div
-          class="cards_container"
-          id="cards_container"
-          onclick="overlayDisplayRemove('cards_container')"
-        >
+        <div class="cards_container" id="cards_container">
           <!-- <div class="cards">
             <div class="header">
               <span class="pokemon_id">#001</span>
@@ -140,14 +149,16 @@
 
       <footer id="footer" class="footer" onclick="overlayDisplayAdd('footer')">
         <div class="logo">
-          <img src="" alt="" />
+          <img
+            src="assets/icons/81717987-83b84000-947b-11ea-9ac9-5ad1d59adf7a.png"
+            alt="Logo"
+          />
         </div>
-
-        <div class="text"></div>
+        <span id="first">POKEDEX</span>
+        <span id="second">&copy; Niloufar 2025</span>
       </footer>
     </div>
 
-    <script src="scripts/datenBank.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="scripts/script.js"></script>
   </body>

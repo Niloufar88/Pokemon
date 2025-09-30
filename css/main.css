@@ -1,9 +1,9 @@
-@import url(../css/standard.css);
-@import url(../css/style.css);
-@import url(../css/xxl.css) screen;
-@import url(../css/xl.css) screen and (width<1440px);
-@import url(../css/lg.css) screen and (width<1220px);
-@import url(../css/md.css) screen and (width<992px);
-@import url(../css/sm.css) screen and (width<768px);
-@import url(../css/sm.css) screen and (width<576px);
-@import url(../css/xs.css) screen and (min-width: 320px) and (max-width:576px);
+@import url(standard.css);
+@import url(style.css);
+@import url(xxl.css) screen;
+@import url(xl.css) screen and (width<1440px);
+@import url(lg.css) screen and (width<1220px);
+@import url(md.css) screen and (width<992px);
+@import url(sm.css) screen and (width<768px);
+@import url(sm.css) screen and (width<576px);
+@import url(xs.css) screen and (min-width: 320px) and (max-width:440px);
