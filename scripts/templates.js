@@ -88,10 +88,7 @@ function getDataForOverlayTemplate(data) {
             <h4>SP-ATTACK</h4>
             <progress value="${data.stats[3].base_stat}" max="100" class="progress-bar"></progress>
             </div>
-            <div class="stats">
-            <h4>SP-DEFENCE</h4>
-            <progress value="${data.stats[4].base_stat}" max="100" class="progress-bar"></progress>
-            </div>
+            
             <div class="stats">
             <h4>SPEED</h4>
             <progress value="${data.stats[5].base_stat}" max="100" class="progress-bar"></progress>

@@ -6,28 +6,33 @@ const pokedexEl = document.getElementById('logo_container');
 const overlayEl = document.querySelector('.card_overlay');
 const searchBtn = document.querySelector('.searchBtn');
 const bodyEl = document.getElementById('body');
-
+const fetchMorePokemonsArray = [];
 const fetchedUrls = [];
 const showMoreBtn = document.getElementById('show_more');
 let currentItem = 20;
 let inputData = "";
 let currentPokemonId;
-
+let cards = [...document.querySelectorAll('.main .cards_container .cards')];
 
 // load more function:
-showMoreBtn.addEventListener('click', () => {
-    let cards = [...document.querySelectorAll('.main .cards_container .cards')];
-    for (let i = currentItem; i < currentItem + 20; i++) {
-        cards[i].style.display = "flex";
+showMoreBtn.addEventListener('click', async() => {
+    if (currentItem + 20 > cards.length) {
+        for (let i = cards.length + 1; i <= currentItem + 20; i++) {
+            await fetchMorePokemons(i);
+        }
+        await renderNewFetchedPokemons();
+        for (let i = currentItem; i < currentItem + 20 && i < cards.length; i++) {
+            cards[i].style.display = "flex";
+        }
     }
     currentItem += 20;
-    if (currentItem >= cards.length) {
+    if (currentItem >= 1025) {
         showMoreBtn.style.display = "none";
     }
-})
+});
 
 // Event Listeners:
-formEl.addEventListener('submit', (e) => {
+formEl.addEventListener('keyup', (e) => {
     e.preventDefault();
     cardsContainerEl.innerHTML = "";
     inputData = inputEl.value.toLowerCase();
@@ -45,14 +50,13 @@ formEl.addEventListener('submit', (e) => {
         });
         showMoreBtn.style.display = "none";
     } else {
-        cardsContainerEl.innerHTML = `<h2>Oops! Pokemon not Found</h2>`;
+        cardsContainerEl.innerHTML = `<h2>Oops! Pokemon ${inputData} not Found</h2>`;
         errorHandling();
         return;
     }
     cardsContainerEl.classList.remove('fetchFailed');
-    inputEl.value = "";
+    // inputEl.value = "";
 })
-
 
 const imgLooping = () => {
     const cardImgEl = document.querySelectorAll('.pokemon_img');
@@ -64,15 +68,16 @@ const imgLooping = () => {
 }
 
 pokedexEl.addEventListener('click', () => {
+    cardsContainerEl.innerHTML = "";
     fetchPokemons();
 })
 
 //fetch urls on page load:
 const fetchPokemons = async() => {
     try {
-        cardsContainerEl.innerHTML = `<h2>rendering fetched Data ... please wait</h2>`;
+        // cardsContainerEl.innerHTML = `<h2>rendering fetched Data ... please wait</h2>`;
         showMoreBtn.style.display = "none";
-        for (let i = 1; i <= 160; i++) {
+        for (let i = 1; i <= 20; i++) {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
             const responseToJson = await response.json();
             fetchedUrls.push(responseToJson);
@@ -87,7 +92,6 @@ const fetchPokemons = async() => {
 
 // render pokemon data:
 const renderCardData = async() => {
-    cardsContainerEl.innerHTML = "";
     fetchedUrls.map((poke) => {
         cardsContainerEl.classList.remove('fetchFailed');
         cardsContainerEl.innerHTML += getDataFromUrlTemplate(poke);
@@ -96,6 +100,33 @@ const renderCardData = async() => {
     imgLooping();
 }
 
+// fetch more pokemons by clicking show more button:
+const fetchMorePokemons = async(i) => {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
+        const responseToJson = await response.json();
+        fetchMorePokemonsArray.push(responseToJson);
+        console.log(fetchMorePokemonsArray);
+    } catch (error) {
+        cardsContainerEl.innerHTML = `<h2>Oops! Error fetching more Pokemons.</h2>`;
+        errorHandling();
+    }
+}
+
+// render cards by fetching the next batch of pokemons:
+const renderNewFetchedPokemons = async() => {
+    cardsContainerEl.classList.remove('fetchFailed');
+    const start = fetchMorePokemonsArray.length - 20;
+    const end = fetchMorePokemonsArray.length;
+    for (let i = start; i < end; i++) {
+        const poke = fetchMorePokemonsArray[i];
+        if (poke) {
+            cardsContainerEl.innerHTML += getDataFromUrlTemplate(poke);
+        }
+    }
+    showMoreBtn.style.display = "block";
+    imgLooping();
+}
 
 //overlay Function:
 const popupOverlayDetails = async(e) => {
@@ -119,12 +150,13 @@ const popupOverlayDetails = async(e) => {
     }
 }
 
+// next and prev button:
 async function navigationFunctions(direction) {
     if (direction === "left" && currentPokemonId > 1) {
         currentPokemonId--;
         await repeatedFetch(currentPokemonId);
     }
-    if (direction === "right" && currentPokemonId < 160) {
+    if (direction === "right" && currentPokemonId < 1025) {
         currentPokemonId++;
         await repeatedFetch(currentPokemonId);
     }
@@ -137,6 +169,7 @@ async function repeatedFetch(id) {
     renderOverlayCards(data);
 }
 
+// render overlay cards:
 function renderOverlayCards(data) {
     currentPokemonId = data.id;
     cardsContainerEl.classList.remove('fetchFailed');
@@ -158,7 +191,7 @@ if (leftArrowbBtn) {
 const rightArrowBtn = document.getElementById('rightArrow');
 if (rightArrowBtn) {
     rightArrowBtn.addEventListener("click", () => {
-        if (currentPokemonId < 160) {
+        if (currentPokemonId < 1025) {
             navigationFunctions("right");
         }
     });
@@ -166,6 +199,8 @@ if (rightArrowBtn) {
 
 window.history.pushState({}, "", `./index.html?id=${currentPokemonId}`);
 
+
+// toggling functions for overlay:
 function toggleNoneDisplayNavbar(id1, id2, id3, id4, id5, id6) {
     document.getElementById(id1).style.display = "none";
     document.getElementById(id2).style.display = "none";

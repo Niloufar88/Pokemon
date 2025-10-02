@@ -1,5 +1,11 @@
 .card_overlay .overlay {
-    width: 280px;
+    width: 270px;
+}
+
+.card_overlay .overlay .poke_img .overlay_img {
+    margin: 10px 0;
+    width: 250px;
+    height: 200px;
 }
 
 .main {

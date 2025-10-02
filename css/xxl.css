@@ -107,7 +107,7 @@ form .searchBtn:hover {
 }
 
 .main .cards_container .cards {
-    display: none;
+    display: flex;
     width: 100%;
     height: 450px;
     flex-direction: column;
@@ -117,7 +117,8 @@ form .searchBtn:hover {
     transition: all 200ms linear;
 }
 
-.main .cards_container .cards:nth-child(1),
+
+/* .main .cards_container .cards:nth-child(1),
 .main .cards_container .cards:nth-child(2),
 .main .cards_container .cards:nth-child(3),
 .main .cards_container .cards:nth-child(4),
@@ -144,7 +145,7 @@ form .searchBtn:hover {
     place-content: center;
     border: none;
     border-radius: 16px;
-}
+} */
 
 .main .cards_container .cards .pokemon_img:hover img {
     filter: blur(2px);
@@ -259,12 +260,12 @@ form .searchBtn:hover {
     align-items: center;
     background-color: #ffebcd;
     width: 360px;
-    height: auto;
+    height: 550px;
     /* height: fit-content; */
-    max-height: 100vh;
+    /* max-height: 100vh; */
     border: none;
     border-radius: 16px;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -272,12 +273,13 @@ form .searchBtn:hover {
 
 .card_overlay .overlay .overlay_header {
     width: 100%;
-    height: 60px;
+    height: 40px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 25px;
+    padding: 20px;
+    margin-top: 5px;
 }
 
 .card_overlay .overlay .overlay_header .overlay_header_id {
@@ -294,7 +296,7 @@ form .searchBtn:hover {
     position: relative;
 }
 
-.poke_img a {
+.card_overlay .overlay .poke_img a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -302,7 +304,7 @@ form .searchBtn:hover {
     height: 28px; */
 }
 
-.poke_img a #leftArrow {
+.card_overlay .overlay .poke_img a #leftArrow {
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -314,7 +316,7 @@ form .searchBtn:hover {
     z-index: 999;
 }
 
-.poke_img a #rightArrow {
+.card_overlay .overlay .poke_img a #rightArrow {
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -326,14 +328,14 @@ form .searchBtn:hover {
     z-index: 999;
 }
 
-.card_overlay .overlay .overlay_img {
+.card_overlay .overlay .poke_img .overlay_img {
     /* background-color: #455252; */
     margin: 10px 0;
-    width: 100%;
-    height: 250px;
+    width: 340px;
+    height: 200px;
 }
 
-.card_overlay .overlay .overlay_img img {
+.card_overlay .overlay .poke_img .overlay_img img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -370,8 +372,8 @@ form .searchBtn:hover {
 .card_overlay .overlay .overlay_navbar_container {
     margin: 0 auto;
     width: 100%;
-    padding: 25px;
-    height: auto;
+    padding: 15px;
+    height: 300px;
     border: none;
     border-radius: 0 0 16px 16px;
     background-color: #ed9b1fff;
