@@ -14,7 +14,17 @@ let inputData = "";
 let currentPokemonId;
 let cards = [...document.querySelectorAll('.main .cards_container .cards')];
 
-// load more function:
+
+//loading spinner;
+window.addEventListener("load", () => {
+        const loader = document.querySelector(".loader");
+
+        loader.classList.add("loader-hidden");
+        loader.addEventListener("transtionend", () => {
+            document.body.removeChild('loader');
+        })
+    })
+    // load more function:
 showMoreBtn.addEventListener('click', async() => {
     if (currentItem + 20 > cards.length) {
         for (let i = cards.length + 1; i <= currentItem + 20; i++) {
@@ -25,11 +35,14 @@ showMoreBtn.addEventListener('click', async() => {
             cards[i].style.display = "flex";
         }
     }
+    showMoreBtn.disabled = true;
     currentItem += 20;
     if (currentItem >= 1025) {
         showMoreBtn.style.display = "none";
     }
+    showMoreBtn.disabled = false;
 });
+
 
 // Event Listeners:
 formEl.addEventListener('keyup', (e) => {
@@ -75,7 +88,6 @@ pokedexEl.addEventListener('click', () => {
 //fetch urls on page load:
 const fetchPokemons = async() => {
     try {
-        // cardsContainerEl.innerHTML = `<h2>rendering fetched Data ... please wait</h2>`;
         showMoreBtn.style.display = "none";
         for (let i = 1; i <= 20; i++) {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
@@ -83,7 +95,6 @@ const fetchPokemons = async() => {
             fetchedUrls.push(responseToJson);
         }
         cardsContainerEl.classList.remove('fetchFailed');
-        console.log(fetchedUrls);
         renderCardData();
     } catch (error) {
         cardsContainerEl.innerHTML = `<h2> Oops! Error by fetching Urls ...</h2>`;
@@ -106,7 +117,6 @@ const fetchMorePokemons = async(i) => {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
         const responseToJson = await response.json();
         fetchMorePokemonsArray.push(responseToJson);
-        console.log(fetchMorePokemonsArray);
     } catch (error) {
         cardsContainerEl.innerHTML = `<h2>Oops! Error fetching more Pokemons.</h2>`;
         errorHandling();
@@ -134,7 +144,6 @@ const popupOverlayDetails = async(e) => {
     try {
         let cardItem = e.target.closest('.cards');
         const cardId = cardItem ? cardItem.dataset.id : null;
-        // console.log("Card ID:", cardId);
         if (cardId) {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${cardId}`);
             const data = await response.json();
@@ -181,7 +190,8 @@ function renderOverlayCards(data) {
 //buttons Event Listeners:
 const leftArrowbBtn = document.getElementById('leftArrow');
 if (leftArrowbBtn) {
-    leftArrowbBtn.addEventListener("click", () => {
+    leftArrowbBtn.addEventListener("click", (e) => {
+        e.preventDefault();
         if (currentPokemonId > 1) {
             navigationFunctions("left");
         }
@@ -190,7 +200,8 @@ if (leftArrowbBtn) {
 
 const rightArrowBtn = document.getElementById('rightArrow');
 if (rightArrowBtn) {
-    rightArrowBtn.addEventListener("click", () => {
+    rightArrowBtn.addEventListener("click", (e) => {
+        e.preventDefault();
         if (currentPokemonId < 1025) {
             navigationFunctions("right");
         }

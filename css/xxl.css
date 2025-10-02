@@ -91,6 +91,49 @@ form .searchBtn:hover {
     height: fit-content;
 }
 
+.main .loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate((-50%, -50%));
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    place-content: center;
+    background-color: #ffb95d;
+    transition: opacity 0.75s, visibility 0.75s;
+}
+
+.main .loader h2 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader::after {
+    content: "";
+    width: 75px;
+    height: 75px;
+    border: 15px solid #dddddd;
+    border-top-color: #d66100;
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}
+
 .main .cards_container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 340px));

@@ -38,7 +38,7 @@
   </head>
 
   <body onload="fetchPokemons()" id="body">
-    <div class="parent" onmouseover="">
+    <div class="parent">
       <header id="header" class="header" onclick="overlayDisplayAdd('header')">
         <div class="container" id="logo_container">
           <div class="logo">
@@ -61,6 +61,9 @@
         </form>
       </header>
       <main id="main" class="main" onclick="overlayDisplayAdd('main')">
+        <div class="loader">
+          <h2>fetching Pokemons, please wait ...</h2>
+        </div>
         <div class="cards_container" id="cards_container">
           <!-- <div class="cards">
             <div class="header">
