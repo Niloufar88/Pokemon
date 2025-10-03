@@ -32,13 +32,13 @@ function getDataForOverlayTemplate(data) {
               <h3 class="overlay_header_name">${data.name}</h3>
             </div>
             <div class="poke_img">
-              <a href="#" class="arrow left-arrow"  onclick="stopPropagationFurthur('overlay')">
+              <a href="#" class="arrow left-arrow" id="leftArrowContainer" onclick="stopPropagationFurthur('overlay')" style="${data.id === 1 ? 'visibility:hidden;' : ''}"> 
                   <img src="assets/icons/chevron_left.svg" alt="" id="leftArrow" onclick="navigationFunctions('left')"/>
               </a>
             <div class="overlay_img bg_${data.types[0].type.name}" id="overlay_img" onclick="stopPropagationFurthur('overlay')">
               <img src="${data.sprites.other.dream_world.front_default}" alt="${data.name}" />
               </div>
-                <a href="#" class="arrow right-arrow"  onclick="stopPropagationFurthur('overlay')">
+                <a href="#" class="arrow right-arrow" id="rightArrowContainer" onclick="stopPropagationFurthur('overlay')" style="${data.id === 1025 ? 'visibility:hidden;' : ''}">
                     <img src="assets/icons/chevron_right.svg" alt="" id="rightArrow" onclick="navigationFunctions('right')"/>
                 </a>
             </div>

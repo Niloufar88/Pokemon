@@ -1,31 +1,22 @@
-const formEl = document.querySelector('.search');
 const inputEl = document.getElementById('search-input');
 const cardsContainerEl = document.querySelector('.cards_container');
 const cardsEl = document.querySelector('cards');
-const pokedexEl = document.getElementById('logo_container');
 const overlayEl = document.querySelector('.card_overlay');
 const searchBtn = document.querySelector('.searchBtn');
 const bodyEl = document.getElementById('body');
 const fetchMorePokemonsArray = [];
 const fetchedUrls = [];
 const showMoreBtn = document.getElementById('show_more');
+const leftArrowConatiner = document.getElementById('leftArrowContainer');
+const rightArrowContainer = document.getElementById('rightArrowContainer');
 let currentItem = 20;
 let inputData = "";
 let currentPokemonId;
 let cards = [...document.querySelectorAll('.main .cards_container .cards')];
 
 
-//loading spinner;
-window.addEventListener("load", () => {
-        const loader = document.querySelector(".loader");
-
-        loader.classList.add("loader-hidden");
-        loader.addEventListener("transtionend", () => {
-            document.body.removeChild('loader');
-        })
-    })
-    // load more function:
-showMoreBtn.addEventListener('click', async() => {
+// load more function:
+async function loadMorePokemons() {
     if (currentItem + 20 > cards.length) {
         for (let i = cards.length + 1; i <= currentItem + 20; i++) {
             await fetchMorePokemons(i);
@@ -41,37 +32,38 @@ showMoreBtn.addEventListener('click', async() => {
         showMoreBtn.style.display = "none";
     }
     showMoreBtn.disabled = false;
-});
+}
 
-
-// Event Listeners:
-formEl.addEventListener('keyup', (e) => {
-    e.preventDefault();
-    cardsContainerEl.innerHTML = "";
+// search function:
+function searchPokemon() {
     inputData = inputEl.value.toLowerCase();
-    let filteredPokemons;
+    let filteredPokemons = [];
     if (inputData.length >= 3) {
-        filteredPokemons = fetchedUrls.filter((pokemon) => {
-            return pokemon.name.toLowerCase().startsWith(inputData);
-        });
-    }
-    if (filteredPokemons.length > 0) {
+        filteredPokemons = fetchedUrls.filter((pokemon) =>
+            pokemon.name.toLowerCase().startsWith(inputData)
+        );
         cardsContainerEl.innerHTML = "";
-        filteredPokemons.forEach(pokemon => {
-            cardsContainerEl.innerHTML += getDataFromUrlTemplate(pokemon);
+        if (filteredPokemons.length > 0) {
+            filteredPokemons.forEach(pokemon => {
+                cardsContainerEl.innerHTML += getDataFromUrlTemplate(pokemon);
+            });
             imgLooping();
-        });
+            showMoreBtn.style.display = "none";
+            cardsContainerEl.classList.remove('fetchFailed');
+        } else {
+            cardsContainerEl.innerHTML = `<h2>Oops! Pokemon <strong style="color:red;">${inputData}</strong> not Found</h2>`;
+            errorHandling();
+        }
+    } else if (inputData.length === 0) {
+        cardsContainerEl.innerHTML = "";
         showMoreBtn.style.display = "none";
-    } else {
-        cardsContainerEl.innerHTML = `<h2>Oops! Pokemon ${inputData} not Found</h2>`;
-        errorHandling();
-        return;
+        renderCardData();
+        showMoreBtn.style.display = "block";
+        cardsContainerEl.classList.remove('fetchFailed');
     }
-    cardsContainerEl.classList.remove('fetchFailed');
-    // inputEl.value = "";
-})
+}
 
-const imgLooping = () => {
+function imgLooping() {
     const cardImgEl = document.querySelectorAll('.pokemon_img');
     cardImgEl.forEach(img => {
         img.addEventListener("click", (e) => {
@@ -80,13 +72,8 @@ const imgLooping = () => {
     });
 }
 
-pokedexEl.addEventListener('click', () => {
-    cardsContainerEl.innerHTML = "";
-    fetchPokemons();
-})
-
 //fetch urls on page load:
-const fetchPokemons = async() => {
+async function fetchPokemons() {
     try {
         showMoreBtn.style.display = "none";
         for (let i = 1; i <= 20; i++) {
@@ -102,7 +89,7 @@ const fetchPokemons = async() => {
 }
 
 // render pokemon data:
-const renderCardData = async() => {
+async function renderCardData() {
     fetchedUrls.map((poke) => {
         cardsContainerEl.classList.remove('fetchFailed');
         cardsContainerEl.innerHTML += getDataFromUrlTemplate(poke);
@@ -112,7 +99,7 @@ const renderCardData = async() => {
 }
 
 // fetch more pokemons by clicking show more button:
-const fetchMorePokemons = async(i) => {
+async function fetchMorePokemons(i) {
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
         const responseToJson = await response.json();
@@ -124,7 +111,7 @@ const fetchMorePokemons = async(i) => {
 }
 
 // render cards by fetching the next batch of pokemons:
-const renderNewFetchedPokemons = async() => {
+async function renderNewFetchedPokemons() {
     cardsContainerEl.classList.remove('fetchFailed');
     const start = fetchMorePokemonsArray.length - 20;
     const end = fetchMorePokemonsArray.length;
@@ -178,15 +165,6 @@ async function repeatedFetch(id) {
     renderOverlayCards(data);
 }
 
-// render overlay cards:
-function renderOverlayCards(data) {
-    currentPokemonId = data.id;
-    cardsContainerEl.classList.remove('fetchFailed');
-    overlayEl.innerHTML = getDataForOverlayTemplate(data);
-    document.getElementById('card_overlay').classList.remove('d-none');
-    bodyEl.classList.add('no-scroll');
-}
-
 //buttons Event Listeners:
 const leftArrowbBtn = document.getElementById('leftArrow');
 if (leftArrowbBtn) {
@@ -208,8 +186,14 @@ if (rightArrowBtn) {
     });
 }
 
-window.history.pushState({}, "", `./index.html?id=${currentPokemonId}`);
-
+// render overlay cards:
+function renderOverlayCards(data) {
+    currentPokemonId = data.id;
+    cardsContainerEl.classList.remove('fetchFailed');
+    overlayEl.innerHTML = getDataForOverlayTemplate(data);
+    document.getElementById('card_overlay').classList.remove('d-none');
+    bodyEl.classList.add('no-scroll');
+}
 
 // toggling functions for overlay:
 function toggleNoneDisplayNavbar(id1, id2, id3, id4, id5, id6) {
@@ -221,7 +205,6 @@ function toggleNoneDisplayNavbar(id1, id2, id3, id4, id5, id6) {
     document.getElementById(id5).style.backgroundColor = "#ffebcd";
     document.getElementById(id6).style.backgroundColor = "#ffebcd";
 }
-
 
 function overlayDisplayAdd(elementId) {
     document.getElementById('card_overlay').classList.add('d-none');

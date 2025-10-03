@@ -37,7 +37,7 @@
     <link href="assets/Fontawesome/css/solid.css" rel="stylesheet" />
   </head>
 
-  <body onload="fetchPokemons()" id="body">
+  <body id="body" onload="fetchPokemons()">
     <div class="parent">
       <header id="header" class="header" onclick="overlayDisplayAdd('header')">
         <div class="container" id="logo_container">
@@ -49,7 +49,7 @@
           </div>
           <span>POKEDEX</span>
         </div>
-        <form class="search">
+        <form class="search" onkeyup="searchPokemon()">
           <input
             type="search"
             id="search-input"
@@ -57,13 +57,13 @@
             placeholder="Search for Pokemons..."
             required
           />
-          <i class="fa-solid fa-magnifying-glass searchBtn"></i>
+          <i
+            class="fa-solid fa-magnifying-glass searchBtn"
+            onclick="searchPokemon()"
+          ></i>
         </form>
       </header>
       <main id="main" class="main" onclick="overlayDisplayAdd('main')">
-        <div class="loader">
-          <h2>fetching Pokemons, please wait ...</h2>
-        </div>
         <div class="cards_container" id="cards_container">
           <!-- <div class="cards">
             <div class="header">
@@ -80,7 +80,7 @@
             </div>
           </div> -->
         </div>
-        <button id="show_more">show more</button>
+        <button id="show_more" onclick="loadMorePokemons()">show more</button>
         <div
           class="card_overlay d-none"
           id="card_overlay"
